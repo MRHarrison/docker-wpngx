@@ -1,6 +1,8 @@
 # docker-wordpress-nginx
 
-A Dockerfile that installs the latest wordpress, nginx, php-apc and php-fpm.
+A Dockerfile that installs the latest wordpress, nginx, php-apc and php-fpm. Compared with the original Dockerfile, 
+this forked project starts from [docker-ssh](https://github.com/sullof/docker-ssh) instead of ubuntu. But -- be careful -- docker-ssh, currently
+doesn't work and I am working on it.
 
 NB: A big thanks to [jbfink](https://github.com/jbfink/docker-wordpress) who did most of the hard work on the wordpress parts!
 
