@@ -1,15 +1,15 @@
-FROM ubuntu
-MAINTAINER Eugene Ware <eugene@noblesamurai.com>
+FROM docker-ssh
+MAINTAINER Francesco Sullo <sullof@gmail.com>, based on Eugene Ware <eugene@noblesamurai.com> work
+
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt-get update; apt-get -y upgrade
 
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -s /bin/true /sbin/initctl
 
 # Basic Requirements
-RUN apt-get -y install mysql-server mysql-client nginx php5-fpm php5-mysql php-apc pwgen python-setuptools curl git unzip
+RUN apt-get -y install mysql-server mysql-client nginx php5-fpm php5-mysql php-apc pwgen curl git unzip
 
 # Wordpress Requirements
 RUN apt-get -y install php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl
@@ -32,8 +32,8 @@ RUN find /etc/php5/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;
 ADD ./nginx-site.conf /etc/nginx/sites-available/default
 
 # Supervisor Config
-RUN /usr/bin/easy_install supervisor
-ADD ./supervisord.conf /etc/supervisord.conf
+ADD ./supervisord.conf /etc/supervisord.conf.tmp
+RUN cat /etc/supervisord.conf.tmp >> /etc/supervisord.conf; rm /etc/supervisord.conf.tmp
 
 # Install Wordpress
 ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
@@ -48,6 +48,6 @@ ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
 
 # private expose
-EXPOSE 80
+EXPOSE 80 22
 
 CMD ["/bin/bash", "/start.sh"]
