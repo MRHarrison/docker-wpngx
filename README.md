@@ -1,17 +1,15 @@
 # docker-wordpress-nginx
 
-A Dockerfile that installs the latest wordpress, nginx, php-apc and php-fpm. Compared with the original Dockerfile, 
-this forked project starts from [docker-ssh](https://github.com/sullof/docker-ssh) instead of ubuntu. But -- be careful -- docker-ssh, currently
-doesn't work and I am working on it.
+A Dockerfile that installs the latest wordpress, nginx, php-apc and php-fpm. 
 
-NB: A big thanks to [jbfink](https://github.com/jbfink/docker-wordpress) who did most of the hard work on the wordpress parts!
-
-You can check out his [Apache version here](https://github.com/jbfink/docker-wordpress).
+Compared with the original project -- [docker-worpress-nginx](https://github.com/eugeneware/docker-wordpress-nginx), by Eugene Ware -- 
+this forked project starts from sullof/sshd -- [docker-sshd](https://github.com/sullof/docker-sshd) --
+instead of ubuntu.
 
 ## Installation
 
 ```
-$ git clone https://github.com/eugeneware/docker-wordpress-nginx.git
+$ git clone https://github.com/sullof/docker-wordpress-nginx.git
 $ cd docker-wordpress-nginx
 $ sudo docker build -t="docker-wordpress-nginx" .
 ```
@@ -45,3 +43,9 @@ You can the visit the following URL in a browser on your host machine to get sta
 ```
 http://127.0.0.1:<port>
 ```
+
+To connect to the container via ssh, run before 
+```
+docker run -t -i docker-wordpress-nginx cat /root/password.txt
+```
+You will see the current root's password.
