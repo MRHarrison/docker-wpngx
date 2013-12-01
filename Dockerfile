@@ -1,5 +1,6 @@
-FROM docker-ssh
-MAINTAINER Francesco Sullo <sullof@gmail.com>, based on Eugene Ware <eugene@noblesamurai.com> work
+FROM sullof/sshd
+MAINTAINER Francesco Sullo, <sullof@gmail.com>
+# based on https://github.com/eugeneware/docker-wordpress-nginx
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update; apt-get -y upgrade
