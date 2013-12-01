@@ -1,4 +1,7 @@
 FROM sullof/sshd
+# for more info about this basic image:
+# https://github.com/sullof/docker-sshd
+
 MAINTAINER Francesco Sullo, <sullof@gmail.com>
 # based on https://github.com/eugeneware/docker-wordpress-nginx
 
@@ -34,7 +37,7 @@ ADD ./nginx-site.conf /etc/nginx/sites-available/default
 
 # Supervisor Config
 ADD ./supervisord.conf /etc/supervisord.conf.tmp
-RUN cat /etc/supervisord.conf.tmp >> /etc/supervisord.conf; rm /etc/supervisord.conf.tmp
+RUN cat /etc/supervisord.conf.tmp >> /etc/supervisord.conf && rm /etc/supervisord.conf.tmp
 
 # Install Wordpress
 ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
