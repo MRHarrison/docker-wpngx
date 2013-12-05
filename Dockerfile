@@ -2,10 +2,6 @@ FROM sullof/sshd
 # for more info about this basic image:
 # https://github.com/sullof/docker-sshd
 
-# generate a new password for root
-ADD ./configure.sh /configure.sh
-RUN chmod 755 /configure.sh && /configure.sh && rm /configure.sh
-
 MAINTAINER Francesco Sullo, <sullof@gmail.com>
 # based on https://github.com/eugeneware/docker-wordpress-nginx
 

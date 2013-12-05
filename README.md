@@ -35,7 +35,7 @@ $ sudo docker port d404cc2fa27b 80 # Make sure to change the ID to yours!
 This command returns the container ID, which you can use to find the external port you can use to access Wordpress from your host machine:
 
 ```
-$ docker port <container-id> 80
+$ sudo docker port <container-id> 80
 ```
 
 You can the visit the following URL in a browser on your host machine to get started:
@@ -46,6 +46,12 @@ http://127.0.0.1:<port>
 
 To connect to the container via ssh, run before 
 ```
-docker run -t -i docker-wordpress-nginx cat /root/password.txt
+$ sudo docker run -t -i docker-wordpress-nginx bash
 ```
-You will see the current root's password.
+substitute the current /root/.ssh/authorized_keys file with your public key. After, without exiting from the container
+open a new terminal and commit the container to a new image with a command like this:
+```
+$ sudo docker commit [id container] [yourname]/sshd-nginx-wordpress
+```
+and your image is ready to use.
+ 
