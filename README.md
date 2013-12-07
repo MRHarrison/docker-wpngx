@@ -54,4 +54,9 @@ open a new terminal and commit the container to a new image with a command like 
 $ sudo docker commit [id container] [yourname]/sshd-nginx-wordpress
 ```
 and your image is ready to use.
+
+
+### Next step?
+
+I will add, asap, a persistence version in a new branch.
  
