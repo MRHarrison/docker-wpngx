@@ -49,7 +49,8 @@ At the end you'll see an ID output like:
 ```
 colourmoves.local has been associated with 172.14.0.8
 ```
-Now, if you open your browser and run http://colourmoves.local you will see a new Wordpress installation page.
+Now, if you open your browser and run http://colourmoves.local you will see a new Wordpress installation page. And, if you have correctly configure Startie, you can try
+rebooting your system to see that after the hostname will be available again.
 
 ## License 
 
