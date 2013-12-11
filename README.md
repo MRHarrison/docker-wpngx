@@ -9,7 +9,7 @@ A Dockerfile that installs the latest wordpress, nginx, php-apc and php-fpm.
 
 Compared with the original project -- [docker-worpress-nginx](https://github.com/eugeneware/docker-wordpress-nginx), by Eugene Ware -- 
 this forked project starts ```FROM sullof/sshd```, so first off you must build the image sullof/sshd starting from 
-[docker-sshd](https://github.com/sullof/docker-sshd). If you don't need an ssh connection, 
+[docker-sshd](https://github.com/sullof/docker-sshd). If you don't need a ssh connection, 
 you can edit the ```Dockerfile```, change the first line to ```FROM ubuntu:12.04```, and remove the 
 port 22 from the ```EXPOSE``` command. 
 
@@ -25,7 +25,8 @@ git clone https://github.com/sullof/docker-wpngx.git
 cd docker-wpngx
 sudo chmod +x *.sh
 ```
-Change the name of your app in the file ```app.name```. In this example Startie handles a blog called colourmoves, managing the local domain name colourmoves.local.
+Change the name of your app in the file ```app.name```. In this example Startie handles a blog called *Colourmoves*, 
+managing the local domain name ```colourmoves.local```.
 
 # Usage
 
