@@ -20,7 +20,7 @@ for example after a server reboot. If you don't want to use it, remove last line
 
 # Installation
 
-```
+```Shell
 git clone https://github.com/sullof/docker-wpngx.git
 cd docker-wpngx
 sudo chmod +x *.sh
@@ -32,12 +32,12 @@ managing the local domain name ```colourmoves.local```.
 
 To build the image execute:
 
-```bash
+```Shell
 sudo ./build 
 ```
 
 To run the new container, execute:
-```
+```Shell
 sudo ./run.sh
 ```
 Consider that to mantain the persistence, ```run.sh``` associate some local folders to some container's folders. Specifically, in our case, it will
