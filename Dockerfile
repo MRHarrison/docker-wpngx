@@ -9,8 +9,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt
 RUN apt-get update; apt-get -y upgrade
 
 # Keep upstart from complaining
-RUN dpkg-divert --local --rename --add /sbin/initctl
-RUN ln -s /bin/true /sbin/initctl
+RUN dpkg-divert --local --rename --add /sbin/initctl && ln -s /bin/true /sbin/initctl
 
 # Basic Requirements
 RUN apt-get -y install mysql-server mysql-client nginx php5-fpm php5-mysql php-apc pwgen curl git unzip
@@ -33,25 +32,26 @@ RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php5/fpm/php-fpm.co
 RUN find /etc/php5/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
 # nginx site conf
-ADD ./nginx-site.conf /etc/nginx/sites-available/default
+ADD adds/nginx-site.conf /etc/nginx/sites-available/default
 
 # Supervisor Config
-ADD ./supervisord.conf /etc/supervisord.conf.tmp
+# Consider that supervisord is installed and configured by sullof/sshd.
+# We only need to append something to the existent file.
+ADD adds/supervisord.conf /etc/supervisord.conf.tmp
 RUN cat /etc/supervisord.conf.tmp >> /etc/supervisord.conf && rm /etc/supervisord.conf.tmp
 
 # Install Wordpress
 ADD http://wordpress.org/latest.tar.gz /wordpress.tar.gz
-RUN tar xvzf /wordpress.tar.gz -C /usr/share/nginx
-RUN mv /usr/share/nginx/www/5* /usr/share/nginx/wordpress
-RUN rm -rf /usr/share/nginx/www
-RUN mv /usr/share/nginx/wordpress /usr/share/nginx/www
-RUN chown -R www-data:www-data /usr/share/nginx/www
+ADD adds/unzip-wp.sh /unzip-wp.sh
+RUN bin/bash /unzip-wp.sh
+RUN rm /unzip-wp.sh
 
 # Wordpress Initialization and Startup Script
-ADD ./start.sh /start.sh
+ADD adds/wordpress-db-pw.txt /wordpress-db-pw.txt
+ADD adds/start.sh /start.sh
 RUN chmod 755 /start.sh
 
 # private expose
 EXPOSE 80 22
 
-CMD ["/bin/bash", "/start.sh"]
+CMD ["/start.sh"]
