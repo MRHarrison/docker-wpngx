@@ -3,56 +3,48 @@ docker-wpngx
 
 A Dockerfile that installs the latest wordpress, nginx, php-apc and php-fpm. 
 
+# Requirements
+
+### sullof/sshd
+
 Compared with the original project -- [docker-worpress-nginx](https://github.com/eugeneware/docker-wordpress-nginx), by Eugene Ware -- 
-this forked project starts from sullof/sshd -- [docker-sshd](https://github.com/sullof/docker-sshd) --
-instead of ubuntu.
+this forked project starts ```FROM sullof/sshd```, so first off you must build the image sullof/sshd from [docker-sshd](https://github.com/sullof/docker-sshd).
+Alternatively, you can edit ```Dockerfile``` and change it to ```FROM ubuntu:12.04``` and remove the port 22 from the ```EXPOSE``` command. 
 
-## Installation
+### [Startie](https://github.com/sullof/startie) 
+
+Startie is a simple bash script to recover the correct association between a local domain name and the IP of a container, 
+for example after a server reboot. If you don't want to use it, remove last line from ```run.sh```.
+
+# Installation
 
 ```
-$ git clone https://github.com/sullof/docker-wordpress-nginx.git
-$ cd docker-wordpress-nginx
-$ sudo docker build -t="docker-wordpress-nginx" .
+git clone https://github.com/sullof/docker-wpngx.git
+cd docker-wpngx
+sudo chmod +x *.sh
 ```
+Change the name of your app in the file ```app.name```. In this example Startie handles a blog called colourmoves, managing the local domain name colourmoves.local.
 
-## Usage
+# Usage
 
-To spawn a new instance of wordpress:
+To build the image execute:
 
 ```bash
-$ sudo docker run -d docker-wordpress-nginx
+sudo ./build 
 ```
 
-You'll see an ID output like:
+To run the new container, execute:
 ```
-d404cc2fa27b
+sudo ./run.sh
 ```
-
-Use this ID to check the port it's on:
-```bash
-$ sudo docker port d404cc2fa27b 80 # Make sure to change the ID to yours!
-```
-
-This command returns the container ID, which you can use to find the external port you can use to access Wordpress from your host machine:
-
-```
-$ sudo docker port <container-id> 80
-```
-
-You can the visit the following URL in a browser on your host machine to get started:
-
-```
-http://127.0.0.1:<port>
-```
-
-To connect to the container via ssh, run before 
-```
-$ sudo docker run -t -i docker-wordpress-nginx bash
-```
-substitute the current /root/.ssh/authorized_keys file with your public key. After, without exiting from the container
-open a new terminal and commit the container to a new image with a command like this:
-```
-$ sudo docker commit [id container] [yourname]/sshd-nginx-wordpress
-```
-and your image is ready to use.
+Consider that to mantain the persistence, ```run.sh``` associate some local folders to some container's folders. Specifically, in our case, it will
+associate ```/data/colourmoves/mysql``` to ```/usr/lib/mysql``` and ```/data/colourmoves/uploads``` to ```/usr/share/nginx/www/wp-content/uploads```. This way
+if the container restarts for some reason, your data will be safe.
+Also, at the end of the script, ```run.sh``` calls Startie to save the configuration and associate the IP of the container to the local domain name colourmoves.local 
+(or what you have set in the ```app.name``` file).
  
+At the end you'll see an ID output like:
+```
+colourmoves.local has been associated with 172.14.0.8
+```
+Now, if you open your browser and run http://colourmoves.local you will see a new Wordpress installation page.
