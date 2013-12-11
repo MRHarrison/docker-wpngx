@@ -20,10 +20,10 @@ for example after a server reboot. If you don't want to use it, remove last line
 
 # Installation
 
-```Shell
-git clone https://github.com/sullof/docker-wpngx.git
-cd docker-wpngx
-sudo chmod +x *.sh
+```bash
+$ git clone https://github.com/sullof/docker-wpngx.git
+$ cd docker-wpngx
+$ sudo chmod +x *.sh
 ```
 Change the name of your app in the file ```app.name```. In this example Startie handles a blog called **Colourmoves**, 
 managing the local domain name ```colourmoves.local```.
@@ -32,13 +32,13 @@ managing the local domain name ```colourmoves.local```.
 
 To build the image execute:
 
-```Shell
-sudo ./build 
+```bash
+$ sudo ./build 
 ```
 
 To run the new container, execute:
-```Shell
-sudo ./run.sh
+```bash
+$ sudo ./run.sh
 ```
 Consider that to mantain the persistence, ```run.sh``` associate some local folders to some container's folders. Specifically, in our case, it will
 associate ```/data/colourmoves/mysql``` to ```/usr/lib/mysql``` and ```/data/colourmoves/uploads``` to ```/usr/share/nginx/www/wp-content/uploads```. This way
