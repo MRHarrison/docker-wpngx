@@ -25,7 +25,7 @@ git clone https://github.com/sullof/docker-wpngx.git
 cd docker-wpngx
 sudo chmod +x *.sh
 ```
-Change the name of your app in the file ```app.name```. In this example Startie handles a blog called *Colourmoves*, 
+Change the name of your app in the file ```app.name```. In this example Startie handles a blog called _Colourmoves_, 
 managing the local domain name ```colourmoves.local```.
 
 # Usage
