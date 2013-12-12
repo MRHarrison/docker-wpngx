@@ -1,3 +1,5 @@
 #!/bin/bash
-NAME=$(cat app.name)
-docker build -t sullof/wpngx:$NAME .
+
+. ./docker-wpngx.conf
+
+docker build -t "$REPOSITORY:$TAG" .

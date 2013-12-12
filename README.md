@@ -9,13 +9,14 @@ A Dockerfile that installs the latest wordpress, nginx, php-apc and php-fpm.
 
 Compared with the original project -- [docker-worpress-nginx](https://github.com/eugeneware/docker-wordpress-nginx), by Eugene Ware -- 
 this forked project starts ```FROM sullof/sshd```, so first off you must build the image sullof/sshd starting from 
-[docker-sshd](https://github.com/sullof/docker-sshd). If you don't need a ssh connection, 
-you can edit the ```Dockerfile```, change the first line to ```FROM ubuntu:12.04```, and remove the 
-port 22 from the ```EXPOSE``` command. 
+[docker-sshd](https://github.com/sullof/docker-sshd). 
+
+Though, if you don't need a ssh connection, you can edit the ```Dockerfile```, change the first line to ```FROM ubuntu:12.04```, 
+and remove the port 22 from the ```EXPOSE``` command. 
 
 ### [startie](https://github.com/sullof/startie) 
 
-Startie is a simple bash script to recover the correct association between a local domain name and the IP of a container, 
+Startie is a simple bash script to recover the correct association between a local hostname and the IP of a container, 
 for example after a server reboot. If you don't want to use it, remove last line from ```run.sh```.
 
 # Installation
@@ -25,8 +26,13 @@ $ git clone https://github.com/sullof/docker-wpngx.git
 $ cd docker-wpngx
 $ sudo chmod +x *.sh
 ```
-Change the name of your app in the file ```app.name```. In this example Startie handles a blog called **Colourmoves**, 
-managing the local domain name ```colourmoves.local```.
+
+# Configuration
+
+Edit the file ```docker-wpngx.conf``` and assign the name of the repository (for example ```sullof/wpngx```) and the tag (don't use ```latest``` :)
+ 
+_Consider that the tag is used to generate the local folders used for the persistence of the data.
+In this specific example Startie handles a blog called **Colourmoves**, managing the local hostname_ ```colourmoves.local```.
 
 # Usage
 
@@ -37,14 +43,16 @@ $ sudo ./build
 ```
 
 To run the new container, execute:
+
 ```bash
 $ sudo ./run.sh
 ```
+
 Consider that to mantain the persistence, ```run.sh``` associate some local folders to some container's folders. Specifically, in our case, it will
 associate ```/data/colourmoves/mysql``` to ```/usr/lib/mysql``` and ```/data/colourmoves/uploads``` to ```/usr/share/nginx/www/wp-content/uploads```. This way
 if the container restarts for some reason, your data will be safe.
-Also, at the end of the script, ```run.sh``` calls Startie to save the configuration and associate the IP of the container to the local domain name colourmoves.local 
-(or what you have set in the ```app.name``` file).
+Also, at the end of the script, ```run.sh``` calls Startie to save the configuration and associate the IP of the container to the local hostname colourmoves.local 
+(or what you have set in the config file).
  
 At the end you'll see an ID output like:
 ```

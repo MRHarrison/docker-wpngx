@@ -25,7 +25,8 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
 	/'AUTH_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
 	/'SECURE_AUTH_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
 	/'LOGGED_IN_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-	/'NONCE_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/" /usr/share/nginx/www/wp-config-sample.php > /usr/share/nginx/www/wp-config.php
+	/'NONCE_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/" \
+	/usr/share/nginx/www/wp-config-sample.php > /usr/share/nginx/www/wp-config.php
 
 	# Download nginx helper plugin
 	curl -O `curl -i -s http://wordpress.org/plugins/nginx-helper/ | egrep -o "http://downloads.wordpress.org/plugin/[^']+"`
@@ -55,7 +56,12 @@ fi
 	mysql_install_db
 	/usr/bin/mysqld_safe & 
 	sleep 5s
-	mysql -e "create database wordpress; grant all privileges on wordpress.* to 'wordpress'@'localhost' identified by '$WORDPRESS_PASSWORD';flush privileges;"
+	
+	mysql -e "create database wordpress; \
+		grant all privileges on wordpress.* to 'wordpress'@'localhost' \
+		identified by '$WORDPRESS_PASSWORD'; \
+		flush privileges"
+		
 	killall mysqld
  fi
 
