@@ -56,7 +56,6 @@ fi
 	/usr/bin/mysqld_safe & 
 	sleep 5s
 	mysql -e "create database wordpress; grant all privileges on wordpress.* to 'wordpress'@'localhost' identified by '$WORDPRESS_PASSWORD';flush privileges;"
-	mysql -uroot -p$MYSQL_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'ciccio'@'%' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
 	killall mysqld
  fi
 
